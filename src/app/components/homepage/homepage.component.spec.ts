@@ -57,7 +57,7 @@ const expandedArr = [1, 2];
 
 describe('HomepageComponent', () => {
   let component: HomepageComponent;
-  let fixture: ComponentFixture<HomepageComponent>
+  let fixture: ComponentFixture<HomepageComponent>;
   let de: DebugElement;
   let service: jasmine.SpyObj<PublicationsService>;
 
@@ -75,7 +75,7 @@ describe('HomepageComponent', () => {
       'getPosts', 'updatePost'
     ])
     fixture.detectChanges();
-  })
+  });
 
   it('should be created', () => {
 
@@ -108,10 +108,10 @@ describe('HomepageComponent', () => {
 
   it('should return a filtered list', () => {
     component.publicationList = posts;
-    component.selectedFilter = 'location'
+    component.selectedFilter = 'location';
     let result = component.filterPosts('Sydney');
     fixture.detectChanges();
-    expect(result).toEqual([post])
+    expect(result).toEqual([post]);
   });
 
   it('should return false if the form is invalid', () => {
@@ -132,6 +132,6 @@ describe('HomepageComponent', () => {
     component.onSubmit();
     fixture.detectChanges();
     expect(service.updatePost).not.toHaveBeenCalled()
-  })
+  });
 
 })

@@ -59,24 +59,22 @@ export class HomepageComponent implements OnInit {
     this.headersList = this.publicationList
     .map(obj => obj[header])
     .filter((v, i, a) => a.indexOf(v) === i)
-    .sort()
-    console.log(this.headersList)
+    .sort();
   }
 
   public filterPosts(item: string ) {
     // returns an array of filtered objects that belongs in the group (author, week, location)
-    console.log(this.selectedFilter)
+    
     let filteredList = this.publicationList.filter(x => x[this.selectedFilter] === item)
-    .sort((a,b) => a.time > b.time ? 1 : a.time < b.time ? -1 : 0)
-    console.log(filteredList);
-    return filteredList
+    .sort((a,b) => a.time > b.time ? 1 : a.time < b.time ? -1 : 0);
+    return filteredList;
   }
 
   public expandPost(post: Post) {
     // checks is the item is in array of expanded items, removes it if it is, and add it if it isn't
     const index = this.expandedPosts.indexOf(post.id);
     index === -1 ? this.expandedPosts.push(post.id) : this.expandedPosts.splice(index, 1);
-    console.log(this.expandedPosts)
+    
   }
 
   public isItemExpanded(id: number) {
@@ -89,7 +87,6 @@ export class HomepageComponent implements OnInit {
     this.editingItem = item.id;
     this.postForm.controls.author.setValue(item.author);
     this.postForm.controls.location.setValue(item.location);
-    console.log(this.postForm.value)
   }
 
   public isValid() {
