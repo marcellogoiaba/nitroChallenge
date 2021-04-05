@@ -1,0 +1,67 @@
+<div class="container py-5" *ngIf="headersList">
+  <div class="form-group" *ngIf="sortItems">
+    <label for="groupBy">Group items by:</label>
+    <select name="groupBy" id="groupBy" class="form-control" (change)="getHeaders($event.target.value)"
+      [(ngModel)]="selectedFilter">
+      <option [value]="filter.value" *ngFor="let filter of sortItems">{{filter.description}}</option>
+    </select>
+  </div>
+  <div class="headers">
+    <div class="header-wrapper" *ngFor="let header of headersList">
+      <div class="py-2 header px-3 d-flex">
+        <div class="mr-2">
+          &#8250;
+        </div>{{header}}
+      </div>
+      <div class="list-items ml-3">
+        <div class="list-item" *ngFor="let item of filterPosts(header)">
+          <div>
+            <div (click)="expandPost(item)" data-toggle="tooltip" position="bottom"
+            [title]="!isItemExpanded(item.id) ? 'Click to expand' : 'Click to collapse'" class="py-2 px-3 d-flex">
+              <div>
+                <div class="mr-2" [@rotate90]="isItemExpanded(item.id) ? 'final' : 'initial'">
+                  &#8250;
+                </div>
+              </div>
+              <div>
+                <em class="font-weight-bold">{{item.time | date:'medium'}}</em> - {{item.text}}
+              </div>
+            </div>
+            <div [@smoothCollapse]="isItemExpanded(item.id) ? 'final' : 'initial'">
+              <div class="py-2 px-3 bg-light mx-3 border">
+                <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+                  <div class="row d-flex align-items-end">
+                    <div class="col-4 form-group mb-0">
+                      <label class="mb-1 small" for="author">Author</label>
+                      <div *ngIf="editingItem !== item.id">{{item.author}}</div>
+                      <input *ngIf="editingItem === item.id" type="text" class="form-control" name="author" id="author"
+                        formControlName="author">
+                    </div>
+                    <div class="col-4 form-group mb-0">
+                      <label class="mb-1 small" for="author">Location</label>
+                      <div *ngIf="editingItem !== item.id">{{item.location}}</div>
+                      <input *ngIf="editingItem === item.id" type="text" class="form-control" name="location"
+                        id="location" formControlName="location">
+                    </div>
+                    <div class="col-4">
+                      <div class="d-flex">
+                        <div class="ml-auto">
+                          <button type="button" class="btn btn-secondary" *ngIf="editingItem !== item.id"
+                            (click)="editItem(item)">Edit</button>
+                          <button type="submit" class="btn btn-primary mr-2"
+                            *ngIf="editingItem === item.id" [disabled]="!isValid()" >Save</button>
+                          <button type="button" class="btn btn-secondary" *ngIf="editingItem === item.id"
+                            (click)="onCancel()">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
